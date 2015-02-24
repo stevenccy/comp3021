@@ -26,7 +26,7 @@ public class Post {
 
 	@Override
 	public String toString() {
-		return "Post date=" + date + ", content=" + content + "";
+		return "Post date is " + date + ", content is " + content + "";
 	}
 
 	@Override
@@ -61,6 +61,7 @@ public class Post {
 				return false;
 		} else if (!date.equals(other.date))
 			return false;
+		
 		return true;
 	}
 	

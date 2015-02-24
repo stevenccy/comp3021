@@ -54,4 +54,8 @@ public class User {
 		}
 	}
 	
+	@Override
+	public String toString() {
+		return "name: "+ getUserName() + " id: " + getId() + " email: " + getEmail();
+	}
 }

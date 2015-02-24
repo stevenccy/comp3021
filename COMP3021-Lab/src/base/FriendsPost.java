@@ -13,6 +13,6 @@ public class FriendsPost extends Post {
 
 	@Override
 	public String toString() {
-		return "This is a friendpost for " + friend.getUserName()+"."+ super.toString();
+		return "This is a friendpost for user " + friend.toString() +". "+ super.toString();
 	}
 }
