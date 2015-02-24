@@ -62,10 +62,10 @@ public class Post {
 	
 	public boolean contains (String keyword){
 		if (content.contains(keyword)){
-			return true;
+			System.out.println("The post contains "+keyword+".");;
 		}
 		else
-			return false;
+			System.out.println("The post doesn't contain "+keyword+".");;
 	}
 	
 }

@@ -9,7 +9,6 @@ public class FriendsPost extends Post {
 	public FriendsPost(Date date, String content,User user) {
 		super(date, content);
 		this.friend = user;
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
