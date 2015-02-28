@@ -26,7 +26,7 @@ public class Post {
 
 	@Override
 	public String toString() {
-		return "Post date is " + date + ", content is " + content + "";
+		return "Post date is " + date + '\n' + content + "";
 	}
 
 	@Override

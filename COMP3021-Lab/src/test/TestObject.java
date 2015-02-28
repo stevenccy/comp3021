@@ -6,7 +6,7 @@ import base.FriendsPost;
 import base.Post;
 
 public class TestObject {
-	
+	/*
 	public static void main (String[] args){
 		
 		User user = new User (1,"COMP3021","COMP3021@cse.ust.hk");
@@ -19,4 +19,5 @@ public class TestObject {
 		System.out.println(postFromFriend.contains("HKUST"));
 		
 	}
+	*/
 }

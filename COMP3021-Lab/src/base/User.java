@@ -7,7 +7,6 @@ public class User {
 	private int id;
 	private String userName;
 	private String email;
-	private ArrayList<Post>  listOfPost = new ArrayList<Post> ();
 	
 	public int getId() {
 		return id;
@@ -40,20 +39,42 @@ public class User {
 		this.email = email;		
 	}
 	
-	public void DeletePost(String content){
-		for (Post post: listOfPost){
-			if( content.equalsIgnoreCase(post.getContent())){
-				listOfPost.remove(post);
-			}
-		}
-	}
 	
-	public void ListPost (){
-		for (Post post : listOfPost){
-			post.toString();
-		}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + id;
+		result = prime * result
+				+ ((userName == null) ? 0 : userName.hashCode());
+		return result;
 	}
-	
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		if (id != other.id)
+			return false;
+		if (userName == null) {
+			if (other.userName != null)
+				return false;
+		} else if (!userName.equals(other.userName))
+			return false;
+		return true;
+	}
+
 	@Override
 	public String toString() {
 		return "name: "+ getUserName() + " id: " + getId() + " email: " + getEmail();
