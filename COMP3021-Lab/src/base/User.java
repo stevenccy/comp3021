@@ -3,7 +3,7 @@ package base;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class User {
+public class User implements Comparable<User>{
 	private int id;
 	private String userName;
 	private String email;
@@ -78,5 +78,24 @@ public class User {
 	@Override
 	public String toString() {
 		return "name: "+ getUserName() + " id: " + getId() + " email: " + getEmail();
+	}
+
+	@Override
+	public int compareTo(User o) {
+		/*
+		 * The compareTo(User u) method compares this user with the input user u. Since we want to sort by user ID, the behavior of compareTo(User u) is:
+		 * 1. Return 1 if this user’s ID is greater than u’s ID
+		 * 2. Return -1 if this user’s ID is less than u’s ID
+		 * 3. Return 0 if this user’s ID equals to u’s ID
+		 */
+		
+		if (this.getId() == o.getId()){
+			return 0;
+		}
+		else if (this.getId() < o.getId()){
+			return -1;
+		}
+		else 
+			return 1;
 	}
 }

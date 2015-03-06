@@ -6,12 +6,20 @@
 package base;
 import java.util.Date;
 
-public class Post {
+public class Post implements Comparable <Post>{
 	private Date date;
 	private String content;
 	
 	public String getContent() {
 		return content;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 	public void setContent(String content) {
@@ -26,7 +34,7 @@ public class Post {
 
 	@Override
 	public String toString() {
-		return "Post date is " + date + '\n' + content + "";
+		return "Post date: " + date + '\n' + content + "";
 	}
 
 	@Override
@@ -72,5 +80,11 @@ public class Post {
 		else
 			return false;
 	}
+
+	@Override
+	public int compareTo(Post o) {
+		return this.getDate().compareTo(o.getDate());
+	}
+	
 	
 }

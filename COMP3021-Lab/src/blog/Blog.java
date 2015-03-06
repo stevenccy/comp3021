@@ -1,50 +1,50 @@
 package blog;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import base.*;
 
 public class Blog {
 	private User user;
-	private ArrayList<Post>  listOfPost ;
+	private ArrayList<Post>  allPosts ;
 
 	public Blog (User user){
 		this.user = user;
-		listOfPost = new ArrayList<Post> ();
+		allPosts = new ArrayList<Post> ();
 		
-	}
-	
-	public void post (Post post){
-		this.listOfPost.add(post);
-		System.out.println("Successfully added a new post: ");
-		
-	}
-	
-	public void delete (int index){
-		index--;
-		if (index <0 || index > listOfPost.size()){
-			System.out.println("Error! The index are illegal!");
-			return;
-		}
-		else
-		{
-			listOfPost.remove(index);
-		}
 	}
 	
 	@Override
 	public String toString() {
-		return "Blog User: " + user + ", List of Post: " + listOfPost + "]";
+		
+		String tobeReturned = "";
+		int index = 1;
+		tobeReturned= tobeReturned + "Current post(s): "+'\n';
+		for (Post post : allPosts){
+			tobeReturned= tobeReturned + "Post[" + index + "]: " +'\n';
+			tobeReturned= tobeReturned + post.toString() + '\n';
+			index++;
+		}
+		return tobeReturned;
 	}
 	
 	
+
+	public ArrayList<Post> getListOfPost() {
+		return allPosts;
+	}
+
+	public void setPosts(ArrayList<Post> listOfPost) {
+		this.allPosts = listOfPost;
+	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
-				+ ((listOfPost == null) ? 0 : listOfPost.hashCode());
+				+ ((allPosts == null) ? 0 : allPosts.hashCode());
 		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
 	}
@@ -58,10 +58,10 @@ public class Blog {
 		if (getClass() != obj.getClass())
 			return false;
 		Blog other = (Blog) obj;
-		if (listOfPost == null) {
-			if (other.listOfPost != null)
+		if (allPosts == null) {
+			if (other.allPosts != null)
 				return false;
-		} else if (!listOfPost.equals(other.listOfPost))
+		} else if (!allPosts.equals(other.allPosts))
 			return false;
 		if (user == null) {
 			if (other.user != null)
@@ -72,15 +72,49 @@ public class Blog {
 	}
 
 	public void list (){
-		int index = 1;
-		System.out.println("Current post(s): ");
-		for (Post post : listOfPost){
-			System.out.println("Post[" + index + "]: " );
-			System.out.println(post.toString());
-			System.out.println("");
-			index++;
+		System.out.print(this.toString());
+	}
+	
+
+	public void post (Post post){
+		this.allPosts.add(post);
+		System.out.println("Successfully added a new post: ");
+		
+	}
+	
+	public void delete (int index){
+		index--;
+		if (index <0 || index > allPosts.size()){
+			System.out.println("Error! The index are illegal!");
+			return;
+		}
+		else
+		{
+			allPosts.remove(index);
 		}
 	}
 	
+	public void search (int month, String someone){
+		
+		if (month<1 || month>12){
+			return;
+		}
+		
+		Calendar cal = Calendar.getInstance();
+		
+		// search from all posts
+		for (Post p : allPosts){
+			//get the current post's month ( note that Calendar.Month starts with 0 not 1
+			cal.setTime(p.getDate());
+			int postMonth = cal.get(Calendar.MONTH);
+			
+			if ((month-1) == postMonth){
+				if (p.getContent().contains('@'+someone)){
+					System.out.println(p.toString());
+					return;
+				}
+			}
+		}
+	}
 	
 }
