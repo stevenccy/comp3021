@@ -1,23 +1,32 @@
 package blog;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 import base.*;
 
-public class Blog {
+public class Blog implements Serializable {
 	private User user;
 	private ArrayList<Post>  allPosts ;
 
 	public Blog (User user){
 		this.user = user;
 		allPosts = new ArrayList<Post> ();
-		
+
 	}
-	
+
 	@Override
 	public String toString() {
-		
+
 		String tobeReturned = "";
 		int index = 1;
 		tobeReturned= tobeReturned + "Current post(s): "+'\n';
@@ -28,8 +37,8 @@ public class Blog {
 		}
 		return tobeReturned;
 	}
-	
-	
+
+
 
 	public ArrayList<Post> getListOfPost() {
 		return allPosts;
@@ -74,14 +83,14 @@ public class Blog {
 	public void list (){
 		System.out.print(this.toString());
 	}
-	
+
 
 	public void post (Post post){
 		this.allPosts.add(post);
 		System.out.println("Successfully added a new post: ");
-		
+
 	}
-	
+
 	public void delete (int index){
 		index--;
 		if (index <0 || index > allPosts.size()){
@@ -93,21 +102,21 @@ public class Blog {
 			allPosts.remove(index);
 		}
 	}
-	
+
 	public void search (int month, String someone){
-		
+
 		if (month<1 || month>12){
 			return;
 		}
-		
+
 		Calendar cal = Calendar.getInstance();
-		
+
 		// search from all posts
 		for (Post p : allPosts){
 			//get the current post's month ( note that Calendar.Month starts with 0 not 1
 			cal.setTime(p.getDate());
 			int postMonth = cal.get(Calendar.MONTH);
-			
+
 			if ((month-1) == postMonth){
 				if (p.getContent().contains('@'+someone)){
 					System.out.println(p.toString());
@@ -116,5 +125,39 @@ public class Blog {
 			}
 		}
 	}
-	
+
+	public void save (String filepath) throws  IOException{
+		try{
+			ObjectOutputStream oos = new ObjectOutputStream (new BufferedOutputStream ( new FileOutputStream (filepath)));
+
+			oos.writeObject (this);
+			//oos.writeObject(user);
+			//oos.writeObject(allPosts);
+			oos.flush();
+			oos.close();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+
+	public void load (String filepath) throws FileNotFoundException, IOException{
+		try{
+			ObjectInputStream ois = new ObjectInputStream (new BufferedInputStream ( new FileInputStream (filepath)));
+			
+			try{
+				Blog blog =  (Blog) ois.readObject();
+				this.user = blog.user;
+				this.allPosts= blog.allPosts;
+			}
+			catch (ClassNotFoundException e){
+				e.printStackTrace();
+			}
+		}
+		catch (FileNotFoundException e){
+			System.out.println("Wait! There is something wrong. I cannot find the file..");
+		}
+		
+	}
+
 }
