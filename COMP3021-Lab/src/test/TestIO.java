@@ -1,7 +1,5 @@
 package test;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -14,7 +12,7 @@ import blog.Blog;
 
 public class TestIO {
 
-	public static void main(String[] args) throws FileNotFoundException, IOException {
+	public static void main(String[] args) {
 
           System.out.println("****Creating a blog...******");
 		User user = new User(1, "A", "a@cse.ust.hk");
@@ -42,7 +40,7 @@ public class TestIO {
 		
 		// *****************Task 1: save a blog to a file*************
 		System.out.println("\n***Saving the blog to an external file***");
-		String savefilepath="/Users/Steven/git/comp3021/COMP3021-Lab/"+user.getUserName()+".blog";
+		String savefilepath="C:/"+user.getUserName()+".blog";
 		//if the path is not accessible, change it to any path you can access
 		System.out.println("File path: "+savefilepath);
 		blog.save(savefilepath);
@@ -59,7 +57,7 @@ public class TestIO {
 		// ******************Task 2: load a blog from a file***********
 		// Comment the code below if you can't finish this task
 		System.out.println("\n***Loading a blog from an external file...***");
-		String loadfilepath="/Users/Steven/git/comp3021/COMP3021-Lab/"+user.getUserName()+".blog";
+		String loadfilepath="D:/"+user.getUserName()+".blog";
 		    //if the path is not accessible, change it to any path you can access
 		System.out.println("File path: "+loadfilepath);
 		Blog newblog = new Blog(user);
