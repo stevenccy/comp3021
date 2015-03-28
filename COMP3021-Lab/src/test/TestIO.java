@@ -1,5 +1,7 @@
 package test;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -12,7 +14,7 @@ import blog.Blog;
 
 public class TestIO {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException, IOException {
 
           System.out.println("****Creating a blog...******");
 		User user = new User(1, "A", "a@cse.ust.hk");

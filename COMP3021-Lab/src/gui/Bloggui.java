@@ -1,4 +1,4 @@
-package src;
+package gui;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -42,7 +42,10 @@ public class Bloggui implements ActionListener {
 
 		numCharLeft = new JLabel ("You can still input " + numChar + " characters.");
 		postTextArea = new JTextArea ("What's on your mind?");
+		postTextArea.setLineWrap(true);
+		postTextArea.setWrapStyleWord(true);
 		postTextArea.setPreferredSize(new Dimension (400,300));
+	    JScrollPane scrollPane = new JScrollPane(postTextArea);
 		postTextArea.addMouseListener(new MouseListener(){
 
 			@Override
@@ -100,7 +103,7 @@ public class Bloggui implements ActionListener {
 		buttonPanel.add(refreshBut);
 		buttonPanel.add(postBut);
 		upper.add(numCharLeft, BorderLayout.NORTH);
-		upper.add(postTextArea,BorderLayout.CENTER);
+		upper.add(scrollPane,BorderLayout.CENTER);
 		upper.add(buttonPanel,BorderLayout.SOUTH);
 
 		microFrame.add(upper, BorderLayout.CENTER);
