@@ -18,6 +18,7 @@ import javax.swing.*;
 public class Bloggui implements ActionListener {
 
 	private Blog blog;
+	private User user;
 	private JFrame microFrame ;
 	private JPanel upper;
 	private JPanel lower;
@@ -26,7 +27,7 @@ public class Bloggui implements ActionListener {
 	private JTextArea postTextArea;
 	private JButton postBut;
 	private JButton refreshBut;
-	private JTextField postContent;
+	private JTextArea postContent;
 	private JPanel buttonPanel;
 
 	public Bloggui() {
@@ -40,9 +41,12 @@ public class Bloggui implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			if (blog == null){
+				blog = new Blog (new User(1, "User", "User"));
+			}
 			blog.post(new Post(new Date(),postTextArea.getText()));
 
-			blog.save("./blog");
+			blog.save((System.getProperty("user.dir")+"\blog"));
 
 			postTextArea.setText("What's on your mind?");
 		}
@@ -52,8 +56,8 @@ public class Bloggui implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			blog.load("./blog");
-
+			blog.load(System.getProperty("user.dir")+"\blog");
+			postContent.setText(blog.toString());
 		}
 
 	}
@@ -75,7 +79,7 @@ public class Bloggui implements ActionListener {
 		postTextArea = new JTextArea ("What's on your mind?");
 		postTextArea.setLineWrap(true);
 		postTextArea.setWrapStyleWord(true);
-		postTextArea.setPreferredSize(new Dimension (400,300));
+		postTextArea.setPreferredSize(new Dimension (200,200));
 		JScrollPane scrollPane = new JScrollPane(postTextArea);
 		
 		postTextArea.addKeyListener(new KeyListener(){
@@ -88,11 +92,9 @@ public class Bloggui implements ActionListener {
 				}
 				
 			}
-
 			@Override
 			public void keyPressed(KeyEvent arg0) {
 			}
-
 			@Override
 			public void keyReleased(KeyEvent e) {
 				int wordleft = numChar-postTextArea.getText().length();
@@ -114,20 +116,24 @@ public class Bloggui implements ActionListener {
 		buttonPanel.add(postBut);
 		upper.add(numCharLeft, BorderLayout.NORTH);
 		upper.add(scrollPane,BorderLayout.CENTER);
+		upper.setMinimumSize(new Dimension(400,300));
+		
 		upper.add(buttonPanel,BorderLayout.SOUTH);
 
 		microFrame.add(upper, BorderLayout.CENTER);
 
-		postContent= new JTextField("Here is my post!",JTextField.CENTER); 
+		postContent= new JTextArea("Here is my post!"); 
 		postContent.setPreferredSize(new Dimension (400,300));
 		postContent.setEditable(false);
-		postContent.setHorizontalAlignment(JTextField.CENTER);
-		lower.add(postContent, BorderLayout.CENTER);
-
+		//postContent.setHorizontalAlignment(JTextField.CENTER);
+		JScrollPane postScrollPane = new JScrollPane(postContent);
+		//postScrollPane.setBounds(200,200,200,200);
+		lower.add(postScrollPane, BorderLayout.CENTER);
+		lower.setMinimumSize(new Dimension(400,300));
 		microFrame.add(lower, BorderLayout.SOUTH);
-
+		
 		microFrame.setVisible(true);
-		microFrame.pack();
+		//microFrame.pack();
 		microFrame.setLocationRelativeTo(null);
 
 

@@ -42,7 +42,7 @@ public class TestIO {
 		
 		// *****************Task 1: save a blog to a file*************
 		System.out.println("\n***Saving the blog to an external file***");
-		String savefilepath="C:/"+user.getUserName()+".blog";
+		String savefilepath=System.getProperty("user.dir")+"\blog";
 		//if the path is not accessible, change it to any path you can access
 		System.out.println("File path: "+savefilepath);
 		blog.save(savefilepath);
@@ -59,7 +59,7 @@ public class TestIO {
 		// ******************Task 2: load a blog from a file***********
 		// Comment the code below if you can't finish this task
 		System.out.println("\n***Loading a blog from an external file...***");
-		String loadfilepath="D:/"+user.getUserName()+".blog";
+		String loadfilepath=System.getProperty("user.dir")+"\blog";
 		    //if the path is not accessible, change it to any path you can access
 		System.out.println("File path: "+loadfilepath);
 		Blog newblog = new Blog(user);
