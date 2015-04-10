@@ -6,13 +6,18 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
+import java.util.Date;
+
+import base.*;
+import blog.*;
 
 import javax.swing.*;
 
 
 public class Bloggui implements ActionListener {
 
-
+	private Blog blog;
 	private JFrame microFrame ;
 	private JPanel upper;
 	private JPanel lower;
@@ -25,9 +30,35 @@ public class Bloggui implements ActionListener {
 	private JPanel buttonPanel;
 
 	public Bloggui() {
-		super();
 		// TODO Auto-generated constructor stub
 	}
+
+	public void setGUI(){
+	}
+	
+	class postListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			blog.post(new Post(new Date(),postTextArea.getText()));
+
+			blog.save("./blog");
+
+			postTextArea.setText("What's on your mind?");
+		}
+
+	}
+	class refreshListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			blog.load("./blog");
+
+		}
+
+	}
+
+
 
 	public void setWindow() {
 		microFrame = new JFrame (" Micro Blog Demo");
@@ -45,44 +76,18 @@ public class Bloggui implements ActionListener {
 		postTextArea.setLineWrap(true);
 		postTextArea.setWrapStyleWord(true);
 		postTextArea.setPreferredSize(new Dimension (400,300));
-	    JScrollPane scrollPane = new JScrollPane(postTextArea);
-		postTextArea.addMouseListener(new MouseListener(){
-
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				postTextArea.selectAll();;				
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseExited(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mousePressed(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-		});
+		JScrollPane scrollPane = new JScrollPane(postTextArea);
+		
 		postTextArea.addKeyListener(new KeyListener(){
 			@Override
-		    public void keyTyped(KeyEvent arg0) {
-				numCharLeft.setText("You can still input " + (numChar-postTextArea.getText().length()) + " characters.");
-		    }
+			public void keyTyped(KeyEvent arg0) {
+				
+				int wordleft = numChar-postTextArea.getText().length();
+				if (wordleft< 0){
+					arg0.consume();
+				}
+				
+			}
 
 			@Override
 			public void keyPressed(KeyEvent arg0) {
@@ -90,15 +95,20 @@ public class Bloggui implements ActionListener {
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
-				
+				int wordleft = numChar-postTextArea.getText().length();
+				if (wordleft< 0){
+					e.consume();
+					numCharLeft.setText("Your post length has exceeded 140!");
+				}else{
+					numCharLeft.setText("You can still input " + wordleft + " characters.");
+				}
 			}
 		});
-		
+
 		postBut = new JButton("Post");
 		refreshBut = new JButton ("Refresh");
-		postBut.addActionListener(this);
-		refreshBut.addActionListener(this);
+		postBut.addActionListener( new postListener());
+		refreshBut.addActionListener(new refreshListener());
 
 		buttonPanel.add(refreshBut);
 		buttonPanel.add(postBut);
@@ -123,19 +133,15 @@ public class Bloggui implements ActionListener {
 
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == postBut) {
-			postContent.setText("you click POST!");
-		}
-		else if (e.getSource() == refreshBut){
-			postContent.setText("you click REFRESH!");
-		}
-	}
-
 	public static void main (String []args){
 		Bloggui blog = new Bloggui();
 		blog.setWindow();
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

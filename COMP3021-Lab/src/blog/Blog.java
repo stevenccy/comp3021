@@ -126,7 +126,7 @@ public class Blog implements Serializable {
 		}
 	}
 
-	public void save (String filepath) throws  IOException{
+	public void save (String filepath) {
 		try{
 			ObjectOutputStream oos = new ObjectOutputStream (new BufferedOutputStream ( new FileOutputStream (filepath)));
 
@@ -136,12 +136,12 @@ public class Blog implements Serializable {
 			oos.flush();
 			oos.close();
 		}
-		catch(Exception e){
+		catch(IOException e){
 			e.printStackTrace();
 		}
 	}
 
-	public void load (String filepath) throws FileNotFoundException, IOException{
+	public void load (String filepath)  {
 		try{
 			ObjectInputStream ois = new ObjectInputStream (new BufferedInputStream ( new FileInputStream (filepath)));
 			
@@ -155,6 +155,9 @@ public class Blog implements Serializable {
 			}
 		}
 		catch (FileNotFoundException e){
+			System.out.println("Wait! There is something wrong. I cannot find the file..");
+		}
+		catch (IOException e){
 			System.out.println("Wait! There is something wrong. I cannot find the file..");
 		}
 		
