@@ -24,9 +24,13 @@ public class BlogClient {
 			PrintWriter writer = new PrintWriter (target.getOutputStream());
 			Scanner sc = new Scanner(System.in);
 			String temp = sc.next();
-
+			if (temp.equalsIgnoreCase("quit")){
+				writer.println("quit");
+				writer.flush();
+			}
 			writer.println(temp);
 			writer.flush();
+			System.out.println(input.readLine());
 			writer.close();
 			sc.close();
 		}
